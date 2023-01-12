@@ -28,6 +28,7 @@ public class PublishingCompanyController {
 
 	private PublishingCompanyRepository pCompanyRepository;
 	
+	@GetMapping
 	public List<PublishingCompanyModel> getPublishingCompanies(){
 		return pCompanyRepository.findAll();
 	}
