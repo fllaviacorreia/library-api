@@ -2,6 +2,8 @@ package com.projects.library.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,18 +41,23 @@ public class PublishingCompanyController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PublishingCompanyModel createPublishingCompany(@RequestBody PublishingCompanyModel pCompany) {
+	public PublishingCompanyModel createPublishingCompany(
+			@Valid 
+			@RequestBody PublishingCompanyModel pCompany) {
+		
 		return pCompanyRepository.save(pCompany);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<PublishingCompanyModel> editPublishingCompany(
+			@Valid
 			@PathVariable Long id, 
 			@RequestBody PublishingCompanyModel pCompany){
 		
 		if(!pCompanyRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
+		
 		pCompany.setId(id);
 		pCompany = pCompanyRepository.save(pCompany);
 		
