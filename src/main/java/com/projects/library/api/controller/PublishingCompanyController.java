@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projects.library.domain.model.PublishingCompanyModel;
+import com.projects.library.domain.model.PublishingCompany;
 import com.projects.library.domain.repository.PublishingCompanyRepository;
 
 import lombok.AllArgsConstructor;
@@ -29,12 +29,12 @@ public class PublishingCompanyController {
 	private PublishingCompanyRepository pCompanyRepository;
 	
 	@GetMapping
-	public List<PublishingCompanyModel> getPublishingCompanies(){
+	public List<PublishingCompany> getPublishingCompanies(){
 		return pCompanyRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PublishingCompanyModel> getPublishingCompany(@PathVariable Long id){
+	public ResponseEntity<PublishingCompany> getPublishingCompany(@PathVariable Long id){
 		return pCompanyRepository.findById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
@@ -42,18 +42,18 @@ public class PublishingCompanyController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PublishingCompanyModel createPublishingCompany(
+	public PublishingCompany createPublishingCompany(
 			@Valid 
-			@RequestBody PublishingCompanyModel pCompany) {
+			@RequestBody PublishingCompany pCompany) {
 		
 		return pCompanyRepository.save(pCompany);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<PublishingCompanyModel> editPublishingCompany(
+	public ResponseEntity<PublishingCompany> editPublishingCompany(
 			@Valid
 			@PathVariable Long id, 
-			@RequestBody PublishingCompanyModel pCompany){
+			@RequestBody PublishingCompany pCompany){
 		
 		if(!pCompanyRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
@@ -66,7 +66,7 @@ public class PublishingCompanyController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<PublishingCompanyModel> deletePublishingCompany(@PathVariable Long id){
+	public ResponseEntity<PublishingCompany> deletePublishingCompany(@PathVariable Long id){
 		
 		if(!pCompanyRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
